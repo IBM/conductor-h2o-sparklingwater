@@ -1,0 +1,16 @@
+<Deployment xmlns="http://www.platform.com/Symphony/Deployment" packageVersioning="true">
+    <install>
+        <osTypes>
+            <osType name="X86_64" startCmd="./scripts/deploy.sh" timeout="6000" successCodes="0"/>
+            <osType name="LINUXPPC64" startCmd="./scripts/deploy.sh" timeout="6000" successCodes="0"/>
+            <osType name="LINUXPPC64LE" startCmd="./scripts/deploy.sh" timeout="6000" successCodes="0"/>
+        </osTypes>
+    </install>
+    <uninstall>
+        <osTypes>
+            <osType name="X86_64" startCmd="./scripts/undeploy.sh" timeout="3000" successCodes="0"/>
+            <osType name="LINUXPPC64" startCmd="./scripts/undeploy.sh" timeout="3000" successCodes="0"/>
+            <osType name="LINUXPPC64LE" startCmd="./scripts/undeploy.sh" timeout="3000" successCodes="0"/>
+        </osTypes>
+    </uninstall>
+</Deployment>
