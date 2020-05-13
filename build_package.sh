@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PACKAGE_NAME="H2O_Sparklingwater"
-PACKAGE_VERSION="2.3.19"
+PACKAGE_VERSION="3.28.0.3-1-2.4"
 BUILD_DIR=${BUILD_DIR:-./build}
 
 if [ -d "$BUILD_DIR" ]; then
