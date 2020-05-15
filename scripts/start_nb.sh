@@ -339,4 +339,8 @@ rm -rf ${DATADIR}/cookie_notebook.$$
 
 log_info "===== Starting H2O Cluster =====" 
 
-${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client
+if [ -z "$CORE_SITE_DEFAULTFS_XML_FILENAME" ]; then
+   ${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client
+else
+   ${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client --conf "spark.ext.h2o.node.extra=-hdfs_config $CORE_SITE_DEFAULTFS_XML_FILENAME" --conf "spark.ext.h2o.client.extra=-hdfs_config $CORE_SITE_DEFAULTFS_XML_FILENAME"
+fi
