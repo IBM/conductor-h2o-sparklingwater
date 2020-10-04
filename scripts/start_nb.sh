@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ${NOTEBOOK_DEPLOY_DIR}/scripts/common.inc
+source ./scripts/common.inc
 
 trap "exitcode=\$?; sleep 5; exit \$exitcode" EXIT
 

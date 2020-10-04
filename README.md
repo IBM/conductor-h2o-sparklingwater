@@ -9,8 +9,8 @@ Then you can add this package (example: H2O_Sparklingwater-3.28.0.3.tgz) to your
 Parameters you have to define:
 - Name
 - Version (typically the version of H2O Sparkling Water, example 3.28.0.3)
-- Prestart command: ./scripts/prestart_nb.sh
-- Start command: ./scripts/start_nb.sh
+- Prestart command: ./scripts/notebookservicewrapper.sh prestart_nb.sh
+- Start command: ./scripts/notebookservicewrapper.sh start_nb.sh
 - Stop command: ./scripts/stop_nb.sh
 - Job monitor command: ./scripts/jobMonitor.sh
 
