@@ -5,7 +5,7 @@
 #NOTEBOOK_BASE_PORT
 #EGOSC_SERVICE_NAME
 
-source ${NOTEBOOK_DEPLOY_DIR}/scripts/common.inc
+source ./scripts/common.inc
 
 PATH=$PATH:/usr/local/bin:/bin:/usr/bin:/sbin/:/usr/sbin
 

@@ -20,8 +20,8 @@ readycheckscript: null
 samples: null
 sharingenabled: false
 sslsupported: true
-precmd: ./scripts/prestart_nb.sh
-startcmd: ./scripts/start_nb.sh
+precmd: ./scripts/notebookservicewrapper.sh prestart_nb.sh
+startcmd: ./scripts/notebookservicewrapper.sh start_nb.sh
 stopcmd: ./scripts/stop_nb.sh
 jobmonitor: ./scripts/jobMonitor.sh
 version: 3.28.0.3

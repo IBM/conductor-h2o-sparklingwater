@@ -15,6 +15,6 @@ cp -f deployment.xml $BUILD_DIR
 cp -fr scripts $BUILD_DIR
 cp -fr package $BUILD_DIR
 
-cd package;curl ${DOWNLOAD_URL} --output sparkling-water-${PACKAGE_VERSION}.zip
-cd ../$BUILD_DIR
+curl ${DOWNLOAD_URL} --output $BUILD_DIR/package/sparkling-water-${PACKAGE_VERSION}.zip
+cd $BUILD_DIR
 tar czvf "${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz" deployment.xml scripts package
