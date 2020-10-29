@@ -212,7 +212,7 @@ if [ -n "$CONDUCTOR_REST_URL" ]; then
         TIER=tier3
         sslBody=`curl -k -s -b ${DATADIR}/cookie_notebook.$$ -H'Accept:application/json' -X GET "${CONDUCTOR_REST_URL}conductor/v1/instances/${SPARK_INSTANCE_GROUP_UUID}/sslconf/${TIER}" --tlsv1.2` 
         keystorePath=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /"keystorepath"/) print a[2]}' | tr "\"" " "`
-	storePassword=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /storepassword/) print a[2]}' | tr "\"" " "`
+	storePassword=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /"storepassword"/) print a[2]}' | tr "\"" " "`
         tier3aliasName=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /tier3aliasname/) print a[2]}' | tr "\"" " " | tr "}" " " | tr -d '[:space:]'`
         tier3Password=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /tier3password/) print a[2]}' | tr "\"" " "`
         if [ -n "${keystorePath}" ] && [ -n "${storePassword}" ] && [ -n "${tier3aliasName}" ] && [ -n "${tier3Password}" ]; then
