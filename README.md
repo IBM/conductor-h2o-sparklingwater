@@ -25,3 +25,7 @@ In the Spark instance group configuration you need to set:
 - SPARK_EXECUTOR_MEMORY=8g
 - JAVA_HOME to the location of Open JDK, example /usr
 
+Optional:
+
+SPARK_EGO_SLOTS_PER_TASK and SPARK_EGO_EXECUTOR_SLOTS_MAX can be both be set to 1, if you expect executors and slots to match. Otherwise an executor may take multiple slots.
+When restricting the size of the H2O Sparkling Water cluster set spark.ego.slots.max and spark.ego.slots.required and spark.ext.h2o.cluster.size to the same number of slots you want the cluster to take.
