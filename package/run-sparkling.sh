@@ -4,13 +4,15 @@
 TOPDIR=$(cd "$(dirname "$0")/.."; pwd)
 
 source "$TOPDIR/bin/sparkling-env.sh"
+# Java check
+checkJava
 # Verify there is Spark installation
 checkSparkHome
 # Verify if correct Spark version is used
 checkSparkVersion
 # Check sparkling water assembly Jar exists
 checkFatJarExists
-DRIVER_CLASS=water.SparklingWaterDriver
+DRIVER_CLASS=ai.h2o.sparkling.SparklingWaterDriver
 
 DRIVER_MEMORY=${DRIVER_MEMORY:-$DEFAULT_DRIVER_MEMORY}
 MASTER=${MASTER:-"$DEFAULT_MASTER"}
@@ -38,8 +40,8 @@ if [ ! -z "$EGO_DEFAULT_FS_DC" ]; then
 fi
 
 if [ "${NOTEBOOK_SSL_ENABLED}" == "true" ]; then
-        spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.ext.h2o.jks="$H2O_KEYSTORE" --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
+        spark-submit "$@" $VERBOSE --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.ext.h2o.jks="$H2O_KEYSTORE" --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
 else
-	spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
+	spark-submit "$@" $VERBOSE --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
 fi
 
