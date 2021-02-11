@@ -12,8 +12,8 @@ export LOGDIR="${DATADIR}/logs"
 export LOGFILE="${LOGDIR}/nb.log"
 export SERVICE_SEQNO=${DATADIR##*-}
 export CREATED_BY_CONDUCTOR_FOR_SPARK_FILE=.$APP_UUID
-export H2O_PACKAGE_NAME=sparkling-water-2.3.19.zip
-export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}/sparkling-water-2.3.19
+export H2O_PACKAGE_NAME=sparkling-water-3.32.0.4-1-2.3.zip
+export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}/sparkling-water-3.32.0.4-1-2.3
 
 ###############################################################################
 # LOG FUNCTIONS
