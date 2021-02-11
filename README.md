@@ -1,14 +1,15 @@
 # H2O Sparkling Water integration with Conductor
 
+### This is a fork of IBM Conductor for changes needed for Sparkling Water 3.32.0.4
 Project to integrate H2O Sparkling Water as a notebook in IBM Spectrum Conductor.
 
 ### Using:
-Download H2O Sparkling Water and place it in the package folder. In the scripts/common.inc file update the version from 2.3.19 to the version you are using if it is different. Then run the build_package.sh script to build the package.
+Download H2O Sparkling Water and place it in the package folder. In the scripts/common.inc file update the version from 3.32.0.4 to the version you are using if it is different. Then run the build_package.sh script to build the package.
 
-Then you can add this package (example: H2O_Sparklingwater-2.3.19.tgz) to your Conductor cluster through the "Add" button on "Workload" / "Spark" / "Notebook Management" page.
+Then you can add this package (example: H2O_Sparklingwater-3.32.0.4-1-2.3.tar.gz) to your Conductor cluster through the "Add" button on "Workload" / "Spark" / "Notebook Management" page.
 Parameters you have to define:
 - Name
-- Version (typically the version of H2O Sparkling Water, example 2.3.19)
+- Version (typically the version of H2O Sparkling Water, example 3.32.0.4)
 - Prestart command: ./scripts/prestart_nb.sh
 - Start command: ./scripts/start_nb.sh
 - Stop command: ./scripts/stop_nb.sh
