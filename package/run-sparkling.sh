@@ -38,7 +38,7 @@ if [ ! -z "$EGO_DEFAULT_FS_DC" ]; then
 fi
 
 if [ "${NOTEBOOK_SSL_ENABLED}" == "true" ]; then
-        spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.ext.h2o.jks="$H2O_KEYSTORE" --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
+        spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.ext.h2o.jks="$H2O_KEYSTORE" --conf spark.ext.h2o.jks.pass=h2oh2o --conf spark.ext.h2o.internal.rest.verify_ssl_certificates=false --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
 else
 	spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
 fi
