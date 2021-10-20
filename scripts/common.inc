@@ -4,16 +4,20 @@
 # Define environment variables that are not version specific
 
 #set umask
-umask 022
+umask 002
 
+export SERVICE_LOG_FILENAME="${NOTEBOOK_DEPLOY_DIR}service_logs/${EGOSC_SERVICE_NAME}.log"
+export SERVICE_LOG_PRE_FILENAME="${NOTEBOOK_DEPLOY_DIR}service_logs/${EGOSC_SERVICE_NAME}-Pre.log"
+export DEFAULT_LOG_MAX_SIZE=100M
+export SERVICE_LOG_ROTATE_SUFFIX=".%Y-%m-%d_%H_%M_%S"
 export DATADIR="${NOTEBOOK_DATA_DIR}"
 export NB_DATA_DIR="${DATADIR}/data"
 export LOGDIR="${DATADIR}/logs"
 export LOGFILE="${LOGDIR}/nb.log"
 export SERVICE_SEQNO=${DATADIR##*-}
 export CREATED_BY_CONDUCTOR_FOR_SPARK_FILE=.$APP_UUID
-export H2O_PACKAGE_NAME=sparkling-water-3.32.0.5-1-2.3.zip
-export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}/sparkling-water-3.32.0.5-1-2.3
+export H2O_PACKAGE_NAME=sparkling-water-3.32.1.7-1-2.4.zip
+export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}/sparkling-water-3.32.1.7-1-2.4
 
 ###############################################################################
 # LOG FUNCTIONS
@@ -22,6 +26,17 @@ export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}/sparkling-water-3.32.0.5-1-2.3
 export DEBUG_SCRIPTS=${DEBUG_SCRIPTS:-"1"}
 export MAX_NUM_LOGS=${MAX_NUM_LOGS:-"10"}
 export MAX_LOG_SIZE_IN_MB=${MAX_LOG_SIZE_IN_MB:-"100"}
+
+find_rotate_logs()
+{
+	# Find the rotatelogs utility, search the $PATH as well as /sbin and /usr/sbin
+
+	local OLD_PATH="$PATH"
+	export PATH="$PATH:/sbin:/usr/sbin"
+	local ROTATELOGS_PATH=`which rotatelogs`
+	export PATH="$OLD_PATH"
+	echo "$ROTATELOGS_PATH"
+}
 
 #
 # Usage: 
