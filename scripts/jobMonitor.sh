@@ -11,7 +11,7 @@ do
         do
             sleep 10
             retrialtime=$(($retrialtime + 1))
-            IPID=`ps -elf | grep -i water.SparklingWaterDriver | grep $EGOSC_SERVICE_NAME | grep -vi wrapper | grep -vi grep | grep -vi tail | awk '{print $4}'`
+            IPID=`ps -elf | grep -i ai.h2o.sparkling.SparklingWaterDriver | grep $EGOSC_SERVICE_NAME | grep -vi wrapper | grep -vi grep | grep -vi tail | awk '{print $4}'`
             if [ -n "$IPID" ]; then
                port=`netstat -anp | grep LISTEN | grep $IPID/java | grep ":::[1-9]" | grep ":::54" | awk '{print $4}' | awk -F':' '{print $4}'`
                if [ -n "$port" ]; then

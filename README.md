@@ -1,5 +1,6 @@
 # H2O Sparkling Water integration with Conductor
 
+### This is a fork of IBM Conductor for changes needed for Sparkling Water 3.32.0.5
 Project to integrate H2O Sparkling Water as a notebook in IBM Spectrum Conductor.
 
 ### Using:
@@ -24,4 +25,3 @@ In the Spark instance group configuration you need to set:
 - SPARK_EGO_EXECUTOR_IDLE_TIMEOUT=3000
 - SPARK_EXECUTOR_MEMORY=8g
 - JAVA_HOME to the location of Open JDK, example /usr
-
