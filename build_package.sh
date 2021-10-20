@@ -1,9 +1,9 @@
 #!/bin/bash
 
 PACKAGE_NAME="H2O_Sparklingwater"
-PACKAGE_VERSION="3.28.0.3-1-2.4"
+PACKAGE_VERSION="3.32.1.7-1-2.4"
 BUILD_DIR=${BUILD_DIR:-./build}
-DOWNLOAD_URL="https://s3.amazonaws.com/h2o-release/sparkling-water/spark-2.4/3.28.0.3-1-2.4/sparkling-water-3.28.0.3-1-2.4.zip"
+DOWNLOAD_URL="https://h2o-release.s3.amazonaws.com/sparkling-water/spark-2.4/3.32.1.7-1-2.4/sparkling-water-3.32.1.7-1-2.4.zip"
 
 
 if [ -d "$BUILD_DIR" ]; then
