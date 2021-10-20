@@ -1,6 +1,6 @@
 # H2O Sparkling Water integration with Conductor
 
-### This is a fork of IBM Conductor for changes needed for Sparkling Water 3.32.0.5
+### This is a fork of IBM Conductor for changes needed for Sparkling Water 3.32.1.7
 Project to integrate H2O Sparkling Water as a notebook in IBM Spectrum Conductor.
 
 ### Using:
