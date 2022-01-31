@@ -1,7 +1,18 @@
 # H2O Sparkling Water integration with Conductor
 
-### This is a fork of IBM Conductor for changes needed for Sparkling Water 3.32.1.7
+### This is a fork of IBM Conductor for changes needed for later Sparkling Water versions
 Project to integrate H2O Sparkling Water as a notebook in IBM Spectrum Conductor.
+
+### Sparkling Water was tested on following versions:
+IBM SC 2.5.0:
+- SW 3.32.1.7 with Spark 2.4 and Spark 3.0
+
+IBM SC 2.5.1:
+- SW 3.32.1.7 with Spark 2.4 and Spark 3.0
+- SW 3.34.0.8 with Spark 2.4 and Spark 3.0
+
+
+#### NOTE: This repo is using SW 3.32.1.7 on Spark 2.4 as an example. However, other versions could be used. 
 
 ### Using:
 Download [H2O Sparkling Water](https://www.h2o.ai/download) and place it in the package folder. In the scripts/common.inc file update the version from 3.32.1.7-1-2.4 to the version you are using if it is different. Then run the build_package.sh script to build the package.
@@ -25,3 +36,6 @@ In the Spark instance group configuration you need to set:
 - SPARK_EGO_EXECUTOR_IDLE_TIMEOUT=3000
 - SPARK_EXECUTOR_MEMORY=8g
 - JAVA_HOME to the location of Open JDK, example /usr
+
+If another version of Sparkling Water is used. Make sure to update version numbers for these files: build_package.sh, metadata.yml, scripts/common.inc
+
