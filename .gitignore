@@ -2,3 +2,5 @@
 
 build
 package/*.zip
+.idea
+.tmp/

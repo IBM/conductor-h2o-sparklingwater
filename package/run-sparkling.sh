@@ -29,11 +29,11 @@ if [ -z "$H2O_SPARK_CONF" ]; then
     H2O_SPARK_CONF=""
 fi
 
-if [ ! -z "$EGO_DATACONNECTOR" ]; then
+if [ -n "$EGO_DATACONNECTOR" ]; then
     H2O_SPARK_CONF+=" --conf spark.ego.dataconnectors=$EGO_DATACONNECTOR"
 fi
 
-if [ ! -z "$EGO_DEFAULT_FS_DC" ]; then
+if [ -n "$EGO_DEFAULT_FS_DC" ]; then
     H2O_SPARK_CONF+=" --conf spark.ego.dataconnectors.defaultfs=$EGO_DEFAULT_FS_DC"
 fi
 
