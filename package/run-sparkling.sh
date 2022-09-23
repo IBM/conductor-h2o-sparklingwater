@@ -37,6 +37,12 @@ if [ ! -z "$EGO_DEFAULT_FS_DC" ]; then
     H2O_SPARK_CONF+=" --conf spark.ego.dataconnectors.defaultfs=$EGO_DEFAULT_FS_DC"
 fi
 
+if [ ! -z "$EGO_IMPERSONATE_CREDENTIAL" ]; then
+    H2O_SPARK_CONF+=" --conf spark.ego.credential=$EGO_IMPERSONATE_CREDENTIAL"
+elif [ ! -z "$EGO_SERVICE_CREDENTIAL" ]; then
+    H2O_SPARK_CONF+=" --conf spark.ego.credential=$EGO_SERVICE_CREDENTIAL"
+fi
+
 if [ "${NOTEBOOK_SSL_ENABLED}" == "true" ]; then
         spark-submit "$@" $VERBOSE --driver-class-path "$TOPDIR/jars/httpclient-4.5.2.jar" --conf "spark.executor.extraClassPath=$TOPDIR/jars/httpclient-4.5.2.jar" --driver-memory "$DRIVER_MEMORY" --master "$MASTER" $H2O_SPARK_CONF --conf spark.ext.h2o.jks="$H2O_KEYSTORE" --conf spark.driver.extraJavaOptions="$EXTRA_DRIVER_PROPS" --class "$DRIVER_CLASS" "$FAT_JAR_FILE"
 else
