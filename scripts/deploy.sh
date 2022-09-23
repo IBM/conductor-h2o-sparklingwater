@@ -84,13 +84,37 @@ make_directory_with_multilevel_permission() {
                 mkdir "$partialpath"
                 local rc="$?"
                 if [ "$rc" -ne 0 ]; then
-                    echo "Error when trying to create directory $path. Exit code: $rc"
-                    exit 1
+                	#If directory is on a shared file system, it may have been created by a parallel deploy process on another host, check existence again
+                	if [ ! -d "$partialpath" ]; then
+	                    echo "Error when trying to create directory $path. Exit code: $rc"
+	                    exit 1
+	                fi
                 fi
                 if [ "${partialpath%/}" == "${path%/}" ]; then
-                    :
+                    if [ -n "$destperm" ]; then             
+                        chmod $destperm "$partialpath"
+                        rc="$?"
+                        if [ "$rc" -ne 0 ]; then
+                            echo "Failed to change permissions of $partialpath. Exit code: $rc"
+                            exit 20
+                        fi
+                    fi
                 else
-                    chmod $interperm "$partialpath"
+                    if [ -n "$interperm" ]; then
+                        chmod $interperm "$partialpath"
+                        rc="$?"
+                        if [ "$rc" -ne 0 ]; then
+                            echo "Failed to change permissions of $partialpath. Exit code: $rc"
+                            exit 20
+                        fi
+                    fi
+                fi
+                set_dir_grp $partialpath
+                chmod g+rwxs "$partialpath"
+                rc="$?"
+                if [ "$rc" -ne 0 ]; then
+                    echo "Failed to change permissions of $partialpath. Exit code: $rc"
+                    exit 20
                 fi
             fi
         fi

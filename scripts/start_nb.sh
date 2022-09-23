@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ${NOTEBOOK_DEPLOY_DIR}/scripts/common.inc
+source ./scripts/common.inc
 
 trap "exitcode=\$?; sleep 5; exit \$exitcode" EXIT
 
@@ -212,7 +212,7 @@ if [ -n "$CONDUCTOR_REST_URL" ]; then
         TIER=tier3
         sslBody=`curl -k -s -b ${DATADIR}/cookie_notebook.$$ -H'Accept:application/json' -X GET "${CONDUCTOR_REST_URL}conductor/v1/instances/${SPARK_INSTANCE_GROUP_UUID}/sslconf/${TIER}" --tlsv1.2` 
         keystorePath=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /"keystorepath"/) print a[2]}' | tr "\"" " "`
-	storePassword=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /storepassword/) print a[2]}' | tr "\"" " "`
+	storePassword=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /"storepassword"/) print a[2]}' | tr "\"" " "`
         tier3aliasName=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /tier3aliasname/) print a[2]}' | tr "\"" " " | tr "}" " " | tr -d '[:space:]'`
         tier3Password=`echo ${sslBody} | awk '{n=split($0,a,","); for (i=1; i<=n; i++) { print a[i] }}' | awk '{n=split($0,a,":\""); if ($0 ~ /tier3password/) print a[2]}' | tr "\"" " "`
         if [ -n "${keystorePath}" ] && [ -n "${storePassword}" ] && [ -n "${tier3aliasName}" ] && [ -n "${tier3Password}" ]; then
@@ -339,4 +339,8 @@ rm -rf ${DATADIR}/cookie_notebook.$$
 
 log_info "===== Starting H2O Cluster =====" 
 
-${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client
+if [ -z "$CORE_SITE_DEFAULTFS_XML_FILENAME" ]; then
+   ${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client
+else
+   ${H2O_DEPLOY_DIR}/bin/run-sparkling.sh --deploy-mode client --conf "spark.ext.h2o.node.extra=-hdfs_config $CORE_SITE_DEFAULTFS_XML_FILENAME" --conf "spark.ext.h2o.client.extra=-hdfs_config $CORE_SITE_DEFAULTFS_XML_FILENAME"
+fi

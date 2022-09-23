@@ -1,0 +1,27 @@
+anacondarequired: false
+controlwaitperiod: null
+datavolumes: null
+defaultbaseport: null
+dependencies: null
+dockercmd: null
+dockerimagename: null
+dockerize: false
+env:
+  H2O_SPARK_CONF: ''
+id:
+  uuid: H2OSparklingWater-3.32.1.7
+impersonationsupported: true
+jobmonitormaxupdateinterval: 280
+memlimit: null
+monitoringEnabled: false
+name: H2OSparklingWater
+pkgfilename: H2O_Sparklingwater-3.32.1.7-1-2.4.tar.gz
+readycheckscript: null
+samples: null
+sharingenabled: false
+sslsupported: true
+precmd: ./scripts/notebookservicewrapper.sh prestart_nb.sh
+startcmd: ./scripts/notebookservicewrapper.sh start_nb.sh
+stopcmd: ./scripts/stop_nb.sh
+jobmonitor: ./scripts/jobMonitor.sh
+version: 3.32.1.7
