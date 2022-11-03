@@ -9,13 +9,13 @@ dockerize: false
 env:
   H2O_SPARK_CONF: ''
 id:
-  uuid: H2OSparklingWater-3.36.1.4
+  uuid: H2OSparklingWater-SUBST_H2O_VERSION
 impersonationsupported: true
 jobmonitormaxupdateinterval: 280
 memlimit: null
 monitoringEnabled: false
 name: H2OSparklingWater
-pkgfilename: H2O_Sparklingwater-3.36.1.4-1-3.0.tar.gz
+pkgfilename: H2O_Sparklingwater-SUBST_SW_VERSION.tar.gz
 readycheckscript: null
 samples: null
 sharingenabled: false
@@ -24,4 +24,4 @@ precmd: ./scripts/notebookservicewrapper.sh prestart_nb.sh
 startcmd: ./scripts/notebookservicewrapper.sh start_nb.sh
 stopcmd: ./scripts/stop_nb.sh
 jobmonitor: ./scripts/jobMonitor.sh
-version: 3.36.1.4
+version: SUBST_H2O_VERSION

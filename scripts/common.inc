@@ -4,11 +4,12 @@
 source $EGO_TOP/conductorspark/common/scripts/conductor_common.inc
 
 # Uncomment for debug info - as the script is ran by EGO the output sometimes isn't the most informative
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+#export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 #set umask
 umask 002
 
+export SPARKLING_WATER_VERSION=SUBST_SW_VERSION
 export SERVICE_LOG_FILENAME="${NOTEBOOK_DEPLOY_DIR}service_logs/${EGOSC_SERVICE_NAME}.log"
 export SERVICE_LOG_PRE_FILENAME="${NOTEBOOK_DEPLOY_DIR}service_logs/${EGOSC_SERVICE_NAME}-Pre.log"
 export DEFAULT_LOG_MAX_SIZE=100M
@@ -19,7 +20,6 @@ export LOGDIR="${DATADIR}/logs"
 export LOGFILE="${LOGDIR}/nb.log"
 export SERVICE_SEQNO=${DATADIR##*-}
 export CREATED_BY_CONDUCTOR_FOR_SPARK_FILE=.$APP_UUID
-export SPARKLING_WATER_VERSION=3.36.1.4-1-3.0
 export H2O_PACKAGE_NAME=sparkling-water-${SPARKLING_WATER_VERSION}.zip
 export H2O_DEPLOY_DIR=${NOTEBOOK_DEPLOY_DIR}sparkling-water-${SPARKLING_WATER_VERSION}
 
