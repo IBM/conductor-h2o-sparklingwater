@@ -24,8 +24,10 @@ cp -f metadata/metadata.yml "$BUILD_DIR"
 cp -fr scripts "$BUILD_DIR"
 cp -fr package "$BUILD_DIR"
 
-grep -rl SUBST_SW_VERSION "$BUILD_DIR" | xargs sed -i "" "s/SUBST_SW_VERSION/$PACKAGE_VERSION/g"
-grep -rl SUBST_H2O_VERSION "$BUILD_DIR" | xargs sed -i "" "s/SUBST_H2O_VERSION/$H2O_VERSION/g"
+grep -rl SUBST_SW_VERSION "$BUILD_DIR" | xargs sed -i.bak "s/SUBST_SW_VERSION/$PACKAGE_VERSION/g"
+grep -rl SUBST_H2O_VERSION "$BUILD_DIR" | xargs sed -i.bak "s/SUBST_H2O_VERSION/$H2O_VERSION/g"
+# .bak provided for sed command to work on both Darwin & GNU Sed
+find . -name "*.bak" -type f -delete
 
 if [ ! -f "$H2O_SW_ZIP_FILE" ]; then
     curl "${DOWNLOAD_URL}" --output "$H2O_SW_ZIP_FILE"
