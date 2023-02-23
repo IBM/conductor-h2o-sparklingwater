@@ -352,7 +352,16 @@ copy_scripts_dir () {
     find ./scripts/* ! -name deploy.sh ! -name undeploy.sh ! -name *.inc -exec rm -f {} \;
 }
 
+ensure_utils_installed () {
+    if ! command -v $1 &> /dev/null; then
+      echo "Error: $1 is not installed." >&2
+      exit 1
+    fi
+}
+
 copy_h2opackage () {
+    set -x
+    ensure_utils_installed unzip
     unzip ./package/$H2O_PACKAGE_NAME -d $NOTEBOOK_DEPLOY_DIR/
     # Add changes to H2O here
     # Pass in the unique service name as a paramter to the spark driver submitted
@@ -360,6 +369,7 @@ copy_h2opackage () {
     cp -f ./package/run-sparkling.sh $H2O_DEPLOY_DIR/bin
     # Change the memory to 4GB
     cp -f ./package/sparkling-env.sh $H2O_DEPLOY_DIR/bin
+    set +x
 }
 
 create_service_logs_dir() {

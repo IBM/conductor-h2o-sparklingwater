@@ -4,7 +4,7 @@ source ./scripts/common.inc
 
 if [ -z "$1" ]; then
   echo "The script is not defined" >&2
-  exit -1
+  exit 1
 fi
 
 SCRIPT="$1"
