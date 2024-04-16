@@ -144,3 +144,72 @@ log_debug()
         echo "$curr_date DEBUG: $log_msg"
     fi
 }
+
+curlflag=`curl --help |grep tlsv1.2`
+if [ -n "$curlflag" ]; then
+    tlsVersion="--tlsv1.2"
+else
+    tlsVersion="--tlsv1"
+fi
+
+get_curlSecureOpt() {
+    if [ -n "$CONDUCTOR_REST_URL" ]; then
+        last_char=${CONDUCTOR_REST_URL: -1}
+        if [ "${last_char}" != "/" ]; then
+           CONDUCTOR_REST_URL=${CONDUCTOR_REST_URL}"/"
+        fi
+
+        if [[ "$CONDUCTOR_REST_URL" == https://* ]]; then
+            #ASCD is SSL enabled - Need to user the cacert for REST calls to ASCD
+            if [ -z "$ASCD_REST_CACERT_PATH" ]; then
+                echo_log_to_file "The ASCD_REST_CACERT_PATH is not defined. This value is required to connect to ascd REST service using https." $LOGFILE
+                exit 18
+            else
+                #First resolve any environment variables in the path
+                ASCD_REST_CACERT_PATH=`eval echo $ASCD_REST_CACERT_PATH`
+                if [ ! -f $ASCD_REST_CACERT_PATH ]; then
+                    echo_log_to_file "The CA Certificate $ASCD_REST_CACERT_PATH does not exist. This file is required to connect to ascd REST service using https." $LOGFILE
+                    exit 8
+                fi
+
+                curlSecureOpt="--cacert $ASCD_REST_CACERT_PATH"
+            fi
+        else
+            curlSecureOpt="-k"
+        fi
+    fi
+}
+
+do_logon() {
+    get_curlSecureOpt
+    COUNTER=0
+    SLEEP_INTERVAL=3
+    while [ true ]; do
+        csrfStr=`curl $curlSecureOpt -c ${DATADIR}/$2.$$ -XGET -H'Accept: application/json' -H"Authorization: PlatformToken token=$EGO_SERVICE_CREDENTIAL" $1 ${tlsVersion}`
+        #If the REST service is not up yet, nothing will come back in the csrfStr, continue looping until REST service is up
+        if [ -z "$csrfStr" ]; then
+            COUNTER=$(($COUNTER + 1 ))
+            #Log a message every 30 seconds to help debugability in the event that REST service is not available
+            if [ $(( $COUNTER % 10 )) -eq 0 ]; then
+                echo_log_to_file "Unable to connect to the ascd REST service $1 after $(($COUNTER*$SLEEP_INTERVAL)) seconds." $LOGFILE
+            fi
+            sleep $SLEEP_INTERVAL
+            continue
+        fi
+
+        #If csrfStr has content it means the call connected and returned something, try to parse it for the real token {"csrftoken":"...."}
+        csrfArr=($(echo $csrfStr | sed "s/[{}:]/ /g"))
+        arrLen=${#csrfArr[@]}
+        csrfToken=`echo ${csrfArr[1]} | sed "s/\"//g"`
+        if [ -z $csrfToken ] || [ "${arrLen}" != "2" ]; then
+            if [ -n "$csrfStr" ]; then
+                echo_log_to_file "$csrfStr" $LOGFILE $LOGFILE
+            fi
+            echo_log_to_file "$1 failed." $LOGFILE
+            exit 3
+        else
+            echo_log_to_file "csrfStrToken got successfully" $LOGFILE
+            break
+        fi
+    done
+}
