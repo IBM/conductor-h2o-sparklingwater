@@ -32,7 +32,7 @@ while [ 1 ]; do
     retrialtime=$(($retrialtime + 1))
     IPID=$(ps -elf | grep -i ai.h2o.sparkling.SparklingWaterDriver | grep "$EGOSC_SERVICE_NAME" | grep -vi wrapper | grep -vi grep | grep -vi tail | awk '{print $4}')
     if [ -n "$IPID" ]; then
-      port1=$(netstat -anp | grep LISTEN | grep $IPID/java | grep "0.0.0.0:[1-9]" | grep "0.0.0.0:54" | awk '{print $4}' | awk -F':' '{print $2}')
+      port1=$(netstat -anp | grep LISTEN | grep $IPID/java | grep ":::[1-9]" | grep ":::54" | awk '{print $4}' | awk -F':' '{print $4}')
       break
     fi
   done
@@ -43,7 +43,7 @@ while [ 1 ]; do
     exit 0
   fi
   last_log_port=$(grep "Open H2O" "$SERVICE_LOG_FILENAME" | tail -n1 | grep -o '54[0-9]\+')
-  port2=$(netstat -anp | grep LISTEN | grep java | grep $last_log_port | grep "0.0.0.0:[1-9]" | grep "0.0.0.0:54" | awk '{print $4}' | awk -F':' '{print $2}')
+  port2=$(netstat -anp | grep LISTEN | grep java | grep $last_log_port | grep ":::[1-9]" | grep ":::54" | awk '{print $4}' | awk -F':' '{print $4}')
   if [ -n "$port1" ] && [ "$port1" == "$port2" ]; then
     if [ "$NOTEBOOK_SSL_ENABLED" == true ]; then
       HTTP_PREFIX="https"
